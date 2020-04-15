@@ -1,7 +1,16 @@
-import time                            # スリープを使うために必要
-from selenium import webdriver #Selenium Webdriverをインポートして
+#Selenium Webdriverをインポート
+from selenium import webdriver
+
+# スリープを使うために必要
+import time
+
+# キーボード操作
+from selenium.webdriver.common.keys import Keys
 
 driver = webdriver.Chrome("/usr/local/bin/chromedriver") #Chromeを動かすドライバを読み込み
+
+# 単純な待機。最初に設定しておくと要素が見つかるまで指定した最大時間待機してくれる（一回の記述でよい）
+driver.implicitly_wait(10)
 
 #ブラウザ起動、ページ遷移
 driver.get("URL")
@@ -30,16 +39,19 @@ driver.close()
 #全てのウィンドウを閉じるとき
 driver.quit()
 
-# 要素の指定
+# 要素の指定この後にcleck等のアクションをつけるのでこれ単体では使用しない
 # classでの指定
 driver.find_element_by_class_name("classname")
 # idでの指定
 driver.find_element_by_id("id")
-# xpathでの指定
+# xpathでの指定　検証で要素をcopyするときにxpathをcopyで使用できる
 driver.find_element_by_xpath("xpath")
 
 # 要素のクリック
 driver.find_element_by_xpath("XPATH").click()
+driver.find_element_by_id('id').click()
+# name属性指定
+driver.find_element_by_name('name').click()
 
 # ある要素までスクロールしたいとき
 from selenium.webdriver.common.action_chains import ActionChains
@@ -57,6 +69,12 @@ Select(element).select_by_visible_text("text") # 表示テキスト
 
 # テキストを入力したいとき
 driver.find_element_by_id("ID").send_keys("strings")
+
+#　テキストを入力してエンターキーを押したいとき
+driver.find_element_by_id("ID").send_keys("strings", Keys.ENTER)
+
+#　エンターキーを押しながらテキストを入力したいとき
+driver.find_element_by_id("ID").send_keys(Keys.ENTER, "strings")
 
 # テキストを取得したいとき
 driver.find_element_by_id("ID").text
