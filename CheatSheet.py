@@ -39,6 +39,7 @@ driver.close()
 #全てのウィンドウを閉じるとき
 driver.quit()
 
+
 # 要素の指定この後にcleck等のアクションをつけるのでこれ単体では使用しない
 # classでの指定
 driver.find_element_by_class_name("classname")
@@ -52,6 +53,9 @@ driver.find_element_by_xpath("XPATH").click()
 driver.find_element_by_id('id').click()
 # name属性指定
 driver.find_element_by_name('name').click()
+
+# title属性を出力
+driver.find_element_by_tag_name('p').get_attribute('title')
 
 # ある要素までスクロールしたいとき
 from selenium.webdriver.common.action_chains import ActionChains
@@ -76,7 +80,7 @@ driver.find_element_by_id("ID").send_keys("strings", Keys.ENTER)
 #　エンターキーを押しながらテキストを入力したいとき
 driver.find_element_by_id("ID").send_keys(Keys.ENTER, "strings")
 
-# テキストを取得したいとき
+# タグに挟まれたテキストを取得したいとき
 driver.find_element_by_id("ID").text
 
 # 属性を取得したいとき
@@ -92,9 +96,16 @@ driver.maximize_window()
 driver.find_element_by_xpath("xpath").is_displayed()
 
 #要素が有効化どうかを判定したいとき
+# disabled属性かどうか
 driver.find_element_by_xpath("xpath").is_enabled()
 
 #要素が選択されているかどうかを判定したいとき
 driver.find_element_by_xpath("xpath").is_selected()
 
+#ボタンがクリック可能になるまで待機
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
 
+element = WebDriverWait(driver, 20).until(
+EC.element_to_be_clickable((By.ID, "")));
