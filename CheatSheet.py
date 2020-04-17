@@ -109,3 +109,20 @@ from selenium.webdriver.common.by import By
 
 element = WebDriverWait(driver, 20).until(
 EC.element_to_be_clickable((By.ID, "")));
+
+# スクショを撮る
+# 写真を保存するフォルダを作成しておく
+import os
+import sys
+FILENAME = os.path.join(os.path.dirname(os.path.abspath(__file__)), "image/screen.png")
+
+
+# get width and height of the page
+w = driver.execute_script("return document.body.scrollWidth;")
+h = driver.execute_script("return document.body.scrollHeight;")
+
+# set window size
+driver.set_window_size(w,h)
+
+# Get Screen Shot
+driver.save_screenshot(FILENAME)
